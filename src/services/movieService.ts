@@ -1,12 +1,11 @@
-// src/services/movieService.ts
-import axios, { type AxiosResponse } from 'axios';
+import axios from 'axios';
 import { type Movie } from '../types/movie';
 
 const BASE_URL = 'https://api.themoviedb.org/3';
 const TOKEN = import.meta.env.VITE_TMDB_TOKEN as string;
 
 if (!TOKEN) {
-  // Ми не кидаємо помилку, але лог важливий під час локальної розробки
+ 
   console.warn('VITE_TMDB_TOKEN is not defined!');
 }
 
@@ -23,7 +22,9 @@ interface TMDBSearchResponse {
   total_results: number;
 }
 
-export const fetchMovies = async (params: FetchMoviesParams): Promise<TMDBSearchResponse> => {
+export const fetchMovies = async (
+  params: FetchMoviesParams
+): Promise<TMDBSearchResponse> => {
   const config = {
     params: {
       query: params.query,
@@ -36,7 +37,8 @@ export const fetchMovies = async (params: FetchMoviesParams): Promise<TMDBSearch
     },
   };
 
-  const response: AxiosResponse<TMDBSearchResponse> = await axios.get(
+ 
+  const response = await axios.get<TMDBSearchResponse>(
     `${BASE_URL}/search/movie`,
     config
   );
